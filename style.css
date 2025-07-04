@@ -41,4 +41,23 @@ body{
     width: 70px;
     height: 70px;
     border-radius: 15px;
+    color: white;
+    font-family: "Nonito", sans-serif;
+    font-size: 20px;
+}
+
+.grey{
+    background-color: rgb(173, 173, 173);
+}
+
+.pink{
+    background-color: rgb(248, 111, 134);
+}
+
+.black{
+    background-color: rgb(0, 0, 0);
+}
+
+.gradient{
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(255, 92, 119));
 }
