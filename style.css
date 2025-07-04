@@ -1,0 +1,23 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    min-height: 100vh;
+}
+
+.calculator{
+    display: flex;
+    width: 400px;
+    height: 600px;
+    background-color: black;
+    border-radius: 20px;
+}
+
+.line{
+    background-color: white;
+    width: 400px;
+    height: 3px;
+    position: relative;
+    top: 150px;
+}
