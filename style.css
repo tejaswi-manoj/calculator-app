@@ -4,14 +4,14 @@ body{
     align-items: center;
     margin: 0px;
     min-height: 100vh;
+    font-family: "Nonito", sans-serif;
 }
 
 .calculator{
     display: flex;
     flex-direction: column;
-    gap: 10px;
     width: 350px;
-    height: 600px;
+    height: 650px;
     background-color: black;
     border-radius: 20px;
     align-items: center;
@@ -31,7 +31,7 @@ body{
     width: 350px;
     height: 400px;
     position: relative;
-    top: 170px;
+    top: 150px;
     gap:14px;
     align-items: center;
     justify-content: center;
@@ -42,7 +42,6 @@ body{
     height: 70px;
     border-radius: 15px;
     color: white;
-    font-family: "Nonito", sans-serif;
     font-size: 20px;
     cursor: pointer;
 }
@@ -67,4 +66,31 @@ body{
 .gradient{
     background-image: linear-gradient(rgb(255, 255, 255), rgb(255, 92, 119));
 }
+
+#display{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: end;
+    justify-content: end;
+}
+
+#exp{
+    color: rgb(157, 157, 157);
+    position: relative;
+    top: 100px;
+    left: 125px;
+}
+
+#answer{
+    color: white;
+    position: relative;
+    top: 100px;
+    left: 125px;
+    font-weight: bold;
+    font-size: 30px;
+}
+    
+
+
 
