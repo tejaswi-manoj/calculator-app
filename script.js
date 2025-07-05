@@ -31,3 +31,14 @@ function operator(a,o,b){
     }
 }
 
+function displayExp(e){
+    const expDiv = document.getElementById("exp");
+    let value = e.target.textContent;
+    expDiv.textContent += value;
+}
+
+document.querySelectorAll('.operation').forEach(button => {
+    button.addEventListener('click', displayExp);
+});
+
+// document.getElementById("equal").addEventListener("click", displayAns);
