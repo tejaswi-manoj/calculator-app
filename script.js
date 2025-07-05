@@ -1,4 +1,10 @@
-let a,o,b;
+let a,o,b,ans,expDiv, lenNumAndOp;
+let exp = {
+    a,o,b,
+}
+let equalToPressed = false;
+
+// Operator functions
 
 function add(a,b){
     return (a+b);
@@ -32,13 +38,49 @@ function operator(a,o,b){
 }
 
 function displayExp(e){
-    const expDiv = document.getElementById("exp");
+    console.log("displayExp is called")
+    expDiv = document.getElementById("exp");
     let value = e.target.textContent;
     expDiv.textContent += value;
 }
 
-document.querySelectorAll('.operation').forEach(button => {
+document.getElementById("equal").addEventListener("click", displayAns);
+
+document.querySelectorAll('.exp').forEach(button => {
     button.addEventListener('click', displayExp);
 });
 
-// document.getElementById("equal").addEventListener("click", displayAns);
+document.querySelectorAll('.operation').forEach(button => {
+    button.addEventListener('click', firstNumAndOp);
+});
+
+
+
+function displayAns(){
+    console.log("dispans is called")
+    expDiv = document.getElementById("exp");
+    let totalLength = expDiv.textContent.length;
+    exp.b = +(expDiv.textContent.substring(lenNumAndOp+1,totalLength-1));
+    console.log(exp.a);
+    console.log(exp.o);
+    console.log(exp.b);
+
+    ans = operator(exp.a, exp.o, exp.b); //Object properties go in as the input for this function
+
+    console.log(ans);
+
+    const ansDiv = document.getElementById("ans");
+    ansDiv.textContent = ans;
+}
+
+function firstNumAndOp(){
+    console.log("fnao is called")
+    expDiv = document.getElementById("exp");
+    lenNumAndOp = expDiv.textContent.length;
+    exp.a = +(expDiv.textContent.substring(0,lenNumAndOp-1));
+    exp.o = expDiv.textContent[lenNumAndOp-1];
+    console.log(exp.a);
+    console.log(exp.o);
+}
+
+
