@@ -44,6 +44,12 @@ body{
     color: white;
     font-family: "Nonito", sans-serif;
     font-size: 20px;
+    cursor: pointer;
+}
+
+.icons:hover{
+    background-color: white;
+    color: black;
 }
 
 .grey{
