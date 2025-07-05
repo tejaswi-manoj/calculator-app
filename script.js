@@ -60,7 +60,11 @@ function displayAns(){
     console.log("dispans is called")
     expDiv = document.getElementById("exp");
     let totalLength = expDiv.textContent.length;
-    exp.b = +(expDiv.textContent.substring(lenNumAndOp+1,totalLength-1));
+    console.log(totalLength);
+    console.log[(lenNumAndOp+1)];
+    console.log[totalLength-1];
+
+    exp.b = +(expDiv.textContent.substring(lenNumAndOp,totalLength));
     console.log(exp.a);
     console.log(exp.o);
     console.log(exp.b);
