@@ -1,6 +1,4 @@
-let a; // first variable
-let o; // operator
-let b; //second variable
+let a,o,b;
 
 function add(a,b){
     return (a+b);
@@ -18,4 +16,18 @@ function subtract(a,b){
     return (a-b);
 }
 
-console.log(subtract(0,3));
+function operator(a,o,b){
+    if (o==='+'){
+        return add(a,b);
+    }
+    else if (o==='-'){
+        return subtract(a,b);
+    }
+    else if (o==='*'){
+        return multiply(a,b);
+    }
+    else if (o==='/'){
+        return divide(a,b);
+    }
+}
+
