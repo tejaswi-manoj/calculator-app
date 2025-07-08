@@ -6,7 +6,9 @@ let exp = {
 }
 
 let lenExp;
+const symbols = ['/', '*', '+', '-', undefined]
 // Operator functions
+
 
 function add(a,b){
     return (a+b);
@@ -55,23 +57,15 @@ function displayExp(e){
 document.querySelectorAll(".equal").forEach(button=>{
     button.addEventListener("click", () => {
         displayAns();
-        arrSymFun();
+        bodmas();
+        let example = evaluate();
+        console.log(example);
     })
 })
 
 document.querySelectorAll('.exp').forEach(button => {
     button.addEventListener('click', displayExp);
 });
-
-
-// document.querySelectorAll('.exp').forEach(button => {
-//     button.addEventListener('click', () => {
-//         displayExp;
-//         const indices = loopString();
-//         console.log(indices); // Or do something with the result
-//     });
-// });
-
 
 
 document.querySelectorAll('.operation').forEach(button => {
@@ -97,20 +91,9 @@ function firstNumAndOp(){
     exp.o = expDiv.textContent[lenNumAndOp-1];
 }
 
-// Logic
+// BODMAS function to loop through string and get the array of operators in order of BODMAS
 
-// E.g: 1+1*2
-// Take the expression, loop through the string for /, *, +,- one by one. 
-// If / is encountered, then stop and evaluate that expression first
-// How to evaluate? -> loop until another sign or undefined is encountered towards the left. this is your first variable.
-// Loop until another sign is encountered or undefined. this is your second variable.
-// call operate on these two variables and the sign
-// replace that expression with the answer, then do the same again. in this case you get 1+2
-// then evaluate and finally once no more signs are remaining, return the answer.
-
-// Function to loop through string and get the array of operators in order of BODMAS
-
-function arrSymFun(){
+function bodmas(){
     expDiv = document.getElementById("exp");
     lenExp = expDiv.textContent.length;
 
@@ -132,5 +115,32 @@ function arrSymFun(){
     
     return arrSym;
 }
+
+// 7-3*2+3 -> arrSym = [3,1,5]
+
+// Evaluate 3*2, replace that expression with the answer, and then call bodmas on the new expression again.
+
+function evaluate(){
+    expDiv = document.getElementById("exp");
+    lenExp = expDiv.textContent.length;
+    let bodArr = bodmas();
+    let partA='', partB = '';
+    let sym = expDiv.textContent[bodArr[0]];
+
+    for (let i = bodArr[0]-1;!(symbols.includes(expDiv.textContent[i]));i--){
+        partA+=expDiv.textContent[i];
+    }
+    partA = +(partA.split('').reverse().join(''));
+
+    for (let i = bodArr[0]+1;!(symbols.includes(expDiv.textContent[i]));i++){
+        partB+=expDiv.textContent[i];
+    }
+    partB = +(partB.split('').reverse().join(''));
+
+    let ans = operator(partA, sym, partB);
+    return ans;
+
+}
+
 
 
