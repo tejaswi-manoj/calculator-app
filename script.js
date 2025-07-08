@@ -119,12 +119,15 @@ function evaluate(){
     }
 
     partA = +(partA.split('').reverse().join(''));
+    console.log(partA);
 
     for (let i = bodArr[0]+1;!(symbols.includes(workingExpression[i]));i++){
         partB+=workingExpression[i];
         indStopB++;
     }
-    partB = +(partB.split('').reverse().join(''));
+    partB = +(partB.split('').join(''));
+
+    console.log(partB);
 
     let ans = operator(partA, sym, partB);
 
@@ -135,6 +138,7 @@ function evaluate(){
     if (!(symbols.some(sym=>workingExpression.includes(sym)))){
         return workingExpression;
     }
+    
     return evaluate();
 }
 
