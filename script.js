@@ -67,28 +67,12 @@ document.querySelectorAll('.exp').forEach(button => {
     button.addEventListener('click', displayExp);
 });
 
-
-document.querySelectorAll('.operation').forEach(button => {
-    button.addEventListener('click', firstNumAndOp);
-});
-
-
 // Calculate & Display Answer
 
 function displayAns(){
-    expDiv = document.getElementById("exp");
-    let totalLength = expDiv.textContent.length;
-    exp.b = +(expDiv.textContent.substring(lenNumAndOp,totalLength));
-    ans = operator(exp.a, exp.o, exp.b); //Object properties go in as the input for this function
+    ans = evaluate(); //Object properties go in as the input for this function
     const ansDiv = document.getElementById("ans");
     ansDiv.textContent = ans;
-}
-
-function firstNumAndOp(){
-    expDiv = document.getElementById("exp");
-    lenNumAndOp = expDiv.textContent.length;
-    exp.a = +(expDiv.textContent.substring(0,lenNumAndOp-1));
-    exp.o = expDiv.textContent[lenNumAndOp-1];
 }
 
 // BODMAS function to loop through string and get the array of operators in order of BODMAS
