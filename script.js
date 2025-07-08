@@ -7,6 +7,8 @@ let exp = {
 
 let lenExp;
 const symbols = ['/', '*', '+', '-', undefined]
+let workingExpression = "";
+
 // Operator functions
 
 
@@ -46,7 +48,8 @@ function operator(a,o,b){
 function displayExp(e){
     expDiv = document.getElementById("exp");
     let value = e.target.textContent;
-    expDiv.textContent += value;
+    workingExpression+=value;
+    expDiv.textContent = workingExpression;
 }
 
 // Events
@@ -58,8 +61,6 @@ document.querySelectorAll(".equal").forEach(button=>{
     button.addEventListener("click", () => {
         displayAns();
         bodmas();
-        let example = evaluate();
-        console.log(example);
     })
 })
 
@@ -70,7 +71,7 @@ document.querySelectorAll('.exp').forEach(button => {
 // Calculate & Display Answer
 
 function displayAns(){
-    ans = evaluate(); //Object properties go in as the input for this function
+    ans = evaluate(); 
     const ansDiv = document.getElementById("ans");
     ansDiv.textContent = ans;
 }
@@ -104,27 +105,39 @@ function bodmas(){
 
 // Evaluate 3*2, replace that expression with the answer, and then call bodmas on the new expression again.
 
+// 4+33/3-1
+
 function evaluate(){
-    expDiv = document.getElementById("exp");
-    lenExp = expDiv.textContent.length;
+
+    lenExp = workingExpression.length;
     let bodArr = bodmas();
     let partA='', partB = '';
-    let sym = expDiv.textContent[bodArr[0]];
+    let sym = workingExpression[bodArr[0]];
+    let indStopA=bodArr[0], indStopB=bodArr[0];
 
-    for (let i = bodArr[0]-1;!(symbols.includes(expDiv.textContent[i]));i--){
-        partA+=expDiv.textContent[i];
+    for (let i = bodArr[0]-1;!(symbols.includes(workingExpression[i]));i--){
+        partA+=workingExpression[i];
+        indStopA--;
     }
+
     partA = +(partA.split('').reverse().join(''));
 
-    for (let i = bodArr[0]+1;!(symbols.includes(expDiv.textContent[i]));i++){
-        partB+=expDiv.textContent[i];
+    for (let i = bodArr[0]+1;!(symbols.includes(workingExpression[i]));i++){
+        partB+=workingExpression[i];
+        indStopB++;
     }
     partB = +(partB.split('').reverse().join(''));
 
     let ans = operator(partA, sym, partB);
-    return ans;
 
+    let toRemove = workingExpression.slice(indStopA, indStopB+1);
+    workingExpression = workingExpression.replace(toRemove, ans);
+    
+    if (!(symbols.some(sym=>workingExpression.includes(sym)))){
+        return workingExpression;
+    }
+    console.log(workingExpression);
+    return evaluate();
 }
-
 
 
