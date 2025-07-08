@@ -79,21 +79,19 @@ function displayAns(){
 // BODMAS function to loop through string and get the array of operators in order of BODMAS
 
 function bodmas(){
-    expDiv = document.getElementById("exp");
-    lenExp = expDiv.textContent.length;
 
     let arrSym = [];
     
     // First find all division/multiplication operators
     for (let i = 0; i < lenExp; i++) {
-        if (expDiv.textContent[i] == '/' || expDiv.textContent[i] == '*') {
+        if (workingExpression[i] == '/' || workingExpression[i] == '*') {
             arrSym.push(i);
         }
     }
 
     // Then addition/subtraction operators
     for (let i = 0; i < lenExp; i++) {
-        if (expDiv.textContent[i] == '+' || expDiv.textContent[i] == '-') {
+        if (workingExpression[i] == '+' || workingExpression[i] == '-') {
             arrSym.push(i);
         }
     }
@@ -131,12 +129,12 @@ function evaluate(){
     let ans = operator(partA, sym, partB);
 
     let toRemove = workingExpression.slice(indStopA, indStopB+1);
+
     workingExpression = workingExpression.replace(toRemove, ans);
     
     if (!(symbols.some(sym=>workingExpression.includes(sym)))){
         return workingExpression;
     }
-    console.log(workingExpression);
     return evaluate();
 }
 
