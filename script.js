@@ -64,10 +64,20 @@ document.querySelectorAll('.exp').forEach(button => {
 
 document.getElementById('clear').addEventListener('click', clearChar);
 
+document.getElementById('allclear').addEventListener('click', allClear);
+
+
 // Clear last entered char
 
 function clearChar(){
     expDiv.textContent = expDiv.textContent.slice(0,-1);
+}
+
+// Clear all
+
+function allClear(){
+    expDiv.textContent = '';
+    workingExpression = expDiv.textContent;
 }
 
 // Calculate & Display Answer
