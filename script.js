@@ -6,7 +6,8 @@ let exp = {
 }
 
 let lenExp;
-const symbols = ['/', '*', '+', '-', undefined]
+const symbols = ['/', '*', '+', undefined]
+const symbolsNeg = ['/', '*', '+', undefined, '-']
 let workingExpression = "";
 
 // Operator functions
@@ -84,50 +85,42 @@ function bodmas(){
     
     // First find all division/multiplication operators
     for (let i = 0; i < lenExp; i++) {
-        if (workingExpression[i] == '/' || workingExpression[i] == '*') {
+        if (workingExpression[i] === '/' || workingExpression[i] === '*') {
             arrSym.push(i);
         }
     }
 
     // Then addition/subtraction operators
     for (let i = 0; i < lenExp; i++) {
-        if (workingExpression[i] == '+' || workingExpression[i] == '-') {
+        if (workingExpression[i] === '+' || workingExpression[i] === '-' && workingExpression[i-1] != undefined) {
             arrSym.push(i);
         }
     }
-    
+
     return arrSym;
 }
 
-// 7-3*2+3 -> arrSym = [3,1,5]
-
-// Evaluate 3*2, replace that expression with the answer, and then call bodmas on the new expression again.
-
-// 4+33/3-1
 
 function evaluate(){
 
     lenExp = workingExpression.length;
     let bodArr = bodmas();
-    let partA='', partB = '';
+    let partA='', partB = '', partANeg='-';
     let sym = workingExpression[bodArr[0]];
     let indStopA=bodArr[0], indStopB=bodArr[0];
 
-    for (let i = bodArr[0]-1;!(symbols.includes(workingExpression[i]));i--){
+    for (let i = bodArr[0]-1;(((workingExpression[i] === '-') && (workingExpression[i-1] === undefined)) || !(symbolsNeg.includes(workingExpression[i])));i--){
         partA+=workingExpression[i];
         indStopA--;
     }
 
     partA = +(partA.split('').reverse().join(''));
-    console.log(partA);
 
-    for (let i = bodArr[0]+1;!(symbols.includes(workingExpression[i]));i++){
+    for (let i = bodArr[0]+1;!(symbolsNeg.includes(workingExpression[i]));i++){
         partB+=workingExpression[i];
         indStopB++;
     }
     partB = +(partB.split('').join(''));
-
-    console.log(partB);
 
     let ans = operator(partA, sym, partB);
 
@@ -135,10 +128,10 @@ function evaluate(){
 
     workingExpression = workingExpression.replace(toRemove, ans);
     
-    if (!(symbols.some(sym=>workingExpression.includes(sym)))){
+    if (!isNaN(Number(workingExpression))){
         return workingExpression;
     }
-    
+
     return evaluate();
 }
 
