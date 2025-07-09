@@ -71,6 +71,7 @@ document.getElementById('allclear').addEventListener('click', allClear);
 
 function clearChar(){
     expDiv.textContent = expDiv.textContent.slice(0,-1);
+    workingExpression = expDiv.textContent;
 }
 
 // Clear all
@@ -83,27 +84,69 @@ function allClear(){
 // Calculate & Display Answer
 
 function displayAns(){
-    ans = evaluate(); 
+    ans = brackets(workingExpression); 
     const ansDiv = document.getElementById("ans");
     ansDiv.textContent = ans;
 }
 
 // BODMAS function to loop through string and get the array of operators in order of BODMAS
 
-function bodmas(){
+
+function brackets(brStr){
+
+    lenExp = brStr.length;
+
+    let lBracPos, rBracPos;
+    let lBracFound = false, rBracFound = false;
+
+    for (let i = 0; i < lenExp; i++){
+        if (brStr[i] === '('){
+            lBracPos = i;
+            lBracFound = true;
+        }
+        if (brStr[i] === ')' && lBracFound){
+            rBracPos = i;
+            rBracFound = true;
+            break;
+        }
+    }
+
+    if (lBracFound === false && rBracFound === false){
+        return evaluate(brStr);
+    }
+
+    let newStr = brStr.slice(lBracPos+1, rBracPos);
+    let eval = evaluate(newStr);
+
+    let toRemoveBrac = brStr.slice(lBracPos, rBracPos+1);
+
+    brStr = brStr.replace(toRemoveBrac, eval);
+
+    if (!isNaN(Number(brStr))){
+        return brStr;
+    }
+
+    return brackets(brStr);
+
+}
+
+// (9*8+3)+3*4+(8*7+6)
+// 
+
+function bodmas(str){
 
     let arrSym = [];
     
     // First find all division/multiplication operators
     for (let i = 0; i < lenExp; i++) {
-        if (workingExpression[i] === '/' || workingExpression[i] === '*') {
+        if (str[i] === '/' || str[i] === '*') {
             arrSym.push(i);
         }
     }
 
     // Then addition/subtraction operators
     for (let i = 0; i < lenExp; i++) {
-        if (workingExpression[i] === '+' || workingExpression[i] === '-' && workingExpression[i-1] != undefined) {
+        if (str[i] === '+' || str[i] === '-' && str[i-1] != undefined) {
             arrSym.push(i);
         }
     }
@@ -112,37 +155,37 @@ function bodmas(){
 }
 
 
-function evaluate(){
+function evaluate(string){
 
-    lenExp = workingExpression.length;
-    let bodArr = bodmas();
+    lenExp = string.length;
+    let bodArr = bodmas(string);
     let partA='', partB = '', partANeg='-';
-    let sym = workingExpression[bodArr[0]];
+    let sym = string[bodArr[0]];
     let indStopA=bodArr[0], indStopB=bodArr[0];
 
-    for (let i = bodArr[0]-1;(((workingExpression[i] === '-') && (workingExpression[i-1] === undefined)) || !(symbolsNeg.includes(workingExpression[i])));i--){
-        partA+=workingExpression[i];
+    for (let i = bodArr[0]-1;(((string[i] === '-') && (string[i-1] === undefined)) || !(symbolsNeg.includes(string[i])));i--){
+        partA+=string[i];
         indStopA--;
     }
 
     partA = +(partA.split('').reverse().join(''));
 
-    for (let i = bodArr[0]+1;!(symbolsNeg.includes(workingExpression[i]));i++){
-        partB+=workingExpression[i];
+    for (let i = bodArr[0]+1;!(symbolsNeg.includes(string[i]));i++){
+        partB+=string[i];
         indStopB++;
     }
     partB = +(partB.split('').join(''));
 
     let ans = operator(partA, sym, partB);
-    let toRemove = workingExpression.slice(indStopA, indStopB+1);
+    let toRemove = string.slice(indStopA, indStopB+1);
 
-    workingExpression = workingExpression.replace(toRemove, ans);
+    string = string.replace(toRemove, ans);
     
-    if (!isNaN(Number(workingExpression))){
-        return workingExpression;
+    if (!isNaN(Number(string))){
+        return string;
     }
 
-    return evaluate();
+    return evaluate(string);
 }
 
 
