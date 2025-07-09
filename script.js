@@ -53,21 +53,22 @@ function displayExp(e){
     expDiv.textContent = workingExpression;
 }
 
-// Events
+// Event Listeners
 
-// document.getElementById("equal").addEventListener("click", displayAns);
-
-
-document.querySelectorAll(".equal").forEach(button=>{
-    button.addEventListener("click", () => {
-        displayAns();
-        bodmas();
-    })
-})
+document.getElementById('equal').addEventListener('click', displayAns);
 
 document.querySelectorAll('.exp').forEach(button => {
     button.addEventListener('click', displayExp);
 });
+
+
+document.getElementById('clear').addEventListener('click', clearChar);
+
+// Clear last entered char
+
+function clearChar(){
+    expDiv.textContent = expDiv.textContent.slice(0,-1);
+}
 
 // Calculate & Display Answer
 
@@ -123,7 +124,6 @@ function evaluate(){
     partB = +(partB.split('').join(''));
 
     let ans = operator(partA, sym, partB);
-
     let toRemove = workingExpression.slice(indStopA, indStopB+1);
 
     workingExpression = workingExpression.replace(toRemove, ans);
