@@ -9,6 +9,7 @@ let lenExp;
 const symbols = ['/', '*', '+', undefined]
 const symbolsNeg = ['/', '*', '+', undefined, '-']
 let workingExpression = "";
+let numFlag = false;
 
 // Operator functions
 
@@ -48,18 +49,23 @@ function operator(a,o,b){
 function displayExp(e){
     expDiv = document.getElementById("exp");
     ansDiv = document.getElementById("ans");
+    let value = e.target.textContent
 
     if (ansDiv.textContent===""){
-        let value = e.target.textContent;
         workingExpression+=value;
         expDiv.textContent = workingExpression;
     }
 
-    else {
+    else if (['+', '-', '*', '/'].includes(value)){
         workingExpression = ansDiv.textContent;
         ansDiv.textContent = "";
-        let value = e.target.textContent;
         workingExpression+=value;
+        expDiv.textContent = workingExpression;
+    }
+
+    else if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '('].includes(value)){
+        workingExpression = e.target.textContent;
+        ansDiv.textContent = "";
         expDiv.textContent = workingExpression;
     }
 }
