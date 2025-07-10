@@ -9,10 +9,7 @@ let lenExp;
 const symbols = ['/', '*', '+', undefined]
 const symbolsNeg = ['/', '*', '+', undefined, '-']
 let workingExpression = "";
-let numFlag = false;
 
-let lBracF = false;
-let rBracF = false;
 let rBracCount, lBracCount;
 
 const forbidden = ['++', '--', '**', '//', ')(', '()', '+-', '-+', '*/', '/*', '+/', '/+', '-/', '/-', '+*', '*+', '-*', '*-', '(*', '(/', '(+', '(-', '(.', '..', '.+', '.-', '.*', './', '+.', '-.', '*.', '/.', '/)', '*)', '+)', '-)', '.)']
@@ -56,7 +53,7 @@ function displayExp(e){
 
     expDiv = document.getElementById("exp");
     ansDiv = document.getElementById("ans");
-    let value = e.target.textContent
+    let value = e.target.textContent;
 
     let check = workingExpression + value;
     rBracCount = 0;
@@ -70,9 +67,6 @@ function displayExp(e){
             rBracCount++;
         }
     }
-
-    console.log("r brac count:", rBracCount);
-    console.log("l brac count:", lBracCount);
 
     if (forbidden.some(item=>check.includes(item))){
         alert("Invalid Syntax!");
@@ -111,22 +105,42 @@ function displayExp(e){
 
 // Event Listeners
 
+// Enter & Equal to 
 document.getElementById('equal').addEventListener('click', displayAns);
-
-// Enter key
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
+        event.preventDefault();
         displayAns();
     }
 });
 
-
+// Numbers and operators
 document.querySelectorAll('.exp').forEach(button => {
     button.addEventListener('click', displayExp);
 });
 
+document.addEventListener('keydown', function(event){
+    const pressedKey = event.key;
+    if (pressedKey >='0' && pressedKey <='9' || ['*', '-', '+', '/', '(', ')', '.'].includes(pressedKey)){
+            const fakeEvent = {
+            target: {
+                textContent: pressedKey
+            }
+        };
+        displayExp(fakeEvent);
+    }
+})
 
+// Backspace/Clear
 document.getElementById('clear').addEventListener('click', clearChar);
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Backspace') {
+        event.preventDefault();
+        clearChar();
+    }
+});
+
 
 document.getElementById('allclear').addEventListener('click', allClear);
 
@@ -270,3 +284,6 @@ function evaluate(string){
 
     return evaluate(string);
 }
+
+// Theme: Dark & Light Mode
+
