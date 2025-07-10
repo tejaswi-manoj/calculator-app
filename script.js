@@ -12,7 +12,6 @@ let workingExpression = "";
 
 // Operator functions
 
-
 function add(a,b){
     return (a+b);
 }
@@ -48,9 +47,21 @@ function operator(a,o,b){
 
 function displayExp(e){
     expDiv = document.getElementById("exp");
-    let value = e.target.textContent;
-    workingExpression+=value;
-    expDiv.textContent = workingExpression;
+    ansDiv = document.getElementById("ans");
+
+    if (ansDiv.textContent===""){
+        let value = e.target.textContent;
+        workingExpression+=value;
+        expDiv.textContent = workingExpression;
+    }
+
+    else {
+        workingExpression = ansDiv.textContent;
+        ansDiv.textContent = "";
+        let value = e.target.textContent;
+        workingExpression+=value;
+        expDiv.textContent = workingExpression;
+    }
 }
 
 // Event Listeners
@@ -130,9 +141,6 @@ function brackets(brStr){
 
 }
 
-// (9*8+3)+3*4+(8*7+6)
-// 
-
 function bodmas(str){
 
     let arrSym = [];
@@ -187,5 +195,3 @@ function evaluate(string){
 
     return evaluate(string);
 }
-
-
