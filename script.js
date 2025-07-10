@@ -11,6 +11,11 @@ const symbolsNeg = ['/', '*', '+', undefined, '-']
 let workingExpression = "";
 let numFlag = false;
 
+let lBracF = false;
+let rBracF = false;
+
+const forbidden = ['++', '--', '**', '//', ')(', '()', '+-', '-+', '*/', '/*', '+/', '/+', '-/', '/-', '+*', '*+', '-*', '*-', '(*', '(/', '(+', '(-', '(.', '..', '.+', '.-', '.*', './', '+.', '-.', '*.', '/.', '/)', '*)', '+)', '-)', '.)']
+
 // Operator functions
 
 function add(a,b){
@@ -47,11 +52,44 @@ function operator(a,o,b){
 // Display Expression
 
 function displayExp(e){
+
     expDiv = document.getElementById("exp");
     ansDiv = document.getElementById("ans");
     let value = e.target.textContent
 
-    if (ansDiv.textContent===""){
+    let check = workingExpression + value;
+    let rBracCount = 0;
+    let lBracCount = 0;
+
+    for (let i=0;i<check.length;i++){
+        if (check[i]==='('){
+            lBracCount++;
+        }
+        if (check[i]===')'){
+            rBracCount++;
+        }
+    }
+
+    console.log("r brac count:", rBracCount);
+    console.log("l brac count:", lBracCount);
+
+    if (forbidden.some(item=>check.includes(item))){
+        alert("Invalid Syntax!");
+    }
+
+    else if ((workingExpression === "") && (['+', '*', '/', ')'].includes(value))){
+        alert("Invalid Syntax!");
+    }
+    
+    else if (rBracCount>lBracCount){
+        alert("Check brackets!");
+    }
+
+    else if (check[check.length-1]==='(' && !isNaN((check[check.length-2]))){
+        alert("Invalid Syntax!");
+    }
+
+    else if (ansDiv.textContent===""){
         workingExpression+=value;
         expDiv.textContent = workingExpression;
     }
@@ -87,23 +125,37 @@ document.getElementById('allclear').addEventListener('click', allClear);
 // Clear last entered char
 
 function clearChar(){
-    expDiv.textContent = expDiv.textContent.slice(0,-1);
-    workingExpression = expDiv.textContent;
+
+    if (expDiv.textContent!="" && ansDiv.textContent!=""){
+        alert("Press AC to clear all");
+    }
+
+    else {
+        expDiv.textContent = expDiv.textContent.slice(0,-1);
+        workingExpression = expDiv.textContent;
+    }
 }
 
 // Clear all
 
 function allClear(){
     expDiv.textContent = '';
+    ansDiv.textContent = '';
     workingExpression = expDiv.textContent;
 }
 
 // Calculate & Display Answer
 
 function displayAns(){
-    ans = brackets(workingExpression); 
-    const ansDiv = document.getElementById("ans");
-    ansDiv.textContent = ans;
+    if (['+', '*', '/', '-', '.'].includes(workingExpression[workingExpression.length - 1])){
+        alert("Invalid Syntax!");
+    }
+
+    else {
+        ans = brackets(workingExpression); 
+        const ansDiv = document.getElementById("ans");
+        ansDiv.textContent = ans;
+    }
 }
 
 // BODMAS function to loop through string and get the array of operators in order of BODMAS
@@ -170,6 +222,10 @@ function bodmas(str){
 
 
 function evaluate(string){
+
+    if (!isNaN(Number(string))){
+        return string;
+    }
 
     lenExp = string.length;
     let bodArr = bodmas(string);
