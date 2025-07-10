@@ -14,6 +14,8 @@ let rBracCount, lBracCount;
 
 const forbidden = ['++', '--', '**', '//', ')(', '()', '+-', '-+', '*/', '/*', '+/', '/+', '-/', '/-', '+*', '*+', '-*', '*-', '(*', '(/', '(+', '(-', '(.', '..', '.+', '.-', '.*', './', '+.', '-.', '*.', '/.', '/)', '*)', '+)', '-)', '.)']
 
+let isDarkMode = false;
+
 // Operator functions
 
 function add(a,b){
@@ -286,4 +288,3 @@ function evaluate(string){
 }
 
 // Theme: Dark & Light Mode
-

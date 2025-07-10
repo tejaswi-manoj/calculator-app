@@ -50,8 +50,13 @@ body{
     color: black;
 }
 
+/* pair 1 */
 .grey{
     background-color: rgb(173, 173, 173);
+}
+
+.white{
+    background-color: rgb(255, 255, 255);
 }
 
 .pink{
@@ -102,4 +107,3 @@ body{
     color: rgb(248, 111, 134);
     background-color: white;
 }
-
