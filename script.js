@@ -13,6 +13,7 @@ let numFlag = false;
 
 let lBracF = false;
 let rBracF = false;
+let rBracCount, lBracCount;
 
 const forbidden = ['++', '--', '**', '//', ')(', '()', '+-', '-+', '*/', '/*', '+/', '/+', '-/', '/-', '+*', '*+', '-*', '*-', '(*', '(/', '(+', '(-', '(.', '..', '.+', '.-', '.*', './', '+.', '-.', '*.', '/.', '/)', '*)', '+)', '-)', '.)']
 
@@ -58,8 +59,8 @@ function displayExp(e){
     let value = e.target.textContent
 
     let check = workingExpression + value;
-    let rBracCount = 0;
-    let lBracCount = 0;
+    rBracCount = 0;
+    lBracCount = 0;
 
     for (let i=0;i<check.length;i++){
         if (check[i]==='('){
@@ -85,7 +86,7 @@ function displayExp(e){
         alert("Check brackets!");
     }
 
-    else if (check[check.length-1]==='(' && !isNaN((check[check.length-2]))){
+    else if ((check[check.length-1]==='(' && !isNaN((check[check.length-2])))|| (check[check.length-2])===')' && !isNaN((check[check.length-1]))){
         alert("Invalid Syntax!");
     }
 
@@ -111,6 +112,14 @@ function displayExp(e){
 // Event Listeners
 
 document.getElementById('equal').addEventListener('click', displayAns);
+
+// Enter key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        displayAns();
+    }
+});
+
 
 document.querySelectorAll('.exp').forEach(button => {
     button.addEventListener('click', displayExp);
@@ -149,6 +158,10 @@ function allClear(){
 function displayAns(){
     if (['+', '*', '/', '-', '.'].includes(workingExpression[workingExpression.length - 1])){
         alert("Invalid Syntax!");
+    }
+    
+    else if (!(lBracCount===rBracCount)){
+        alert("Check brackets!");
     }
 
     else {
