@@ -108,6 +108,10 @@ function displayExp(e){
     }
     }
 
+    else if (check.length>25){
+        alert("Max number of characters: 25")
+    }
+
     else if (ansDiv.textContent===""){
         workingExpression+=value;
         expDiv.textContent = workingExpression;
