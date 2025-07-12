@@ -209,7 +209,7 @@ function displayAns(){
     else {
         ans = brackets(workingExpression); 
         const ansDiv = document.getElementById("ans");
-        ansDiv.textContent = ans;
+        ansDiv.textContent = Math.round(ans * 10000000) / 10000000;
     }
 }
 
