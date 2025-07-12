@@ -10,7 +10,7 @@ const symbols = ['/', '*', '+', undefined]
 const symbolsNeg = ['/', '*', '+', undefined, '-']
 let workingExpression = "";
 
-let rBracCount, lBracCount;
+let rBracCount, lBracCount, decCount;
 
 const forbidden = ['++', '--', '**', '//', ')(', '()', '+-', '-+', '*/', '/*', '+/', '/+', '-/', '/-', '+*', '*+', '-*', '*-', '(*', '(/', '(+', '(-', '(.', '..', '.+', '.-', '.*', './', '+.', '-.', '*.', '/.', '/)', '*)', '+)', '-)', '.)']
 
@@ -60,6 +60,7 @@ function displayExp(e){
     let check = workingExpression + value;
     rBracCount = 0;
     lBracCount = 0;
+    decCount = 0;
 
     for (let i=0;i<check.length;i++){
         if (check[i]==='('){
@@ -69,6 +70,7 @@ function displayExp(e){
             rBracCount++;
         }
     }
+
 
     if (forbidden.some(item=>check.includes(item))){
         alert("Invalid Syntax!");
@@ -84,6 +86,26 @@ function displayExp(e){
 
     else if ((check[check.length-1]==='(' && !isNaN((check[check.length-2])))|| (check[check.length-2])===')' && !isNaN((check[check.length-1]))){
         alert("Invalid Syntax!");
+    }
+    
+    else if (check[check.length-1] === '.') {
+
+    console.log("decimal point")
+    decCount = 1;
+    for (let i = check.length - 2; i >= 0 && !(['+', '*', '/', '-'].includes(check[i])); i--) {
+        if (check[i] === '.') {
+            decCount += 1;
+        }
+    }
+    
+    if (decCount > 1) {
+        alert("Invalid Syntax!");
+    }     
+
+    else{
+        workingExpression+=value;
+        expDiv.textContent = workingExpression;
+    }
     }
 
     else if (ansDiv.textContent===""){
@@ -286,5 +308,3 @@ function evaluate(string){
 
     return evaluate(string);
 }
-
-// Theme: Dark & Light Mode
